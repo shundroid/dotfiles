@@ -85,6 +85,11 @@ NeoBundle 'marciomazza/vim-brogrammer-theme'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'Shougo/vimshell'
+" gitk っぽいものを Vim で
+NeoBundle 'cohama/agit.vim', {
+\ 'lazy': 1,
+\ 'commands': 'Agit',
+\ }
 call neobundle#end()
 filetype plugin indent on
 
@@ -160,6 +165,24 @@ let g:netrw_nogx = 1
 nmap <Space>x <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 
+" VimShell の設定
+let g:vimshell_prompt = $USERNAME . "% "
+"let g:vimshell_interactive_encodings = {
+"\'git':'utf-8',
+"\}
+
+" Agit.vim
+let agit_action = {}
+function! agit_action.func(dir)
+  if isdirectory(a:dir.word)
+    let dir = fnamemodify(a:dir.word, ':p')
+  else
+    let dir = fnamemodify(a:dir.word, ':p:h')
+  endif
+  execute 'Agit --dir=' . dir
+endfunction
+call unite#custom#action('file,cdable', 'agit', agit_action)
+
 " Space によるキーバインド
 " git grep
 nnoremap <silent> <Space>gg :Unite grep/git:.<CR>
@@ -168,11 +191,21 @@ nnoremap <silent> <Space>b :Unite buffer<CR>
 nnoremap <silent> <Space>z :Unite file_mru<CR>
 nnoremap <silent> <Space>r :Unite file_rec/git<CR>
 nnoremap <silent> <Space>n :Unite file/new<CR>
-nnoremap <silent> <Space>t :tabnew<CR>
-nnoremap <silent> <Space>w gt<CR>
-nnoremap <silent> <Space>s gT<CR>
+nnoremap <silent> <Space>tt :tabnew<CR>
+nnoremap <silent> <Space>th gt<CR>
+nnoremap <silent> <Space>tl gT<CR>
 nnoremap <silent> <Space>y :Unite history/yank<CR>
 nnoremap <silent> <Space>q :q<CR>
+nnoremap <silent> <Space>s :VimShellCreate<CR>
+nnoremap <silent> <Space>wv <C-w>v<CR>
+nnoremap <silent> <Space>ws <C-w>s<CR>
+nnoremap <silent> <Space>ww <C-w>w<CR>
+nnoremap <silent> <Space>wj <C-w><Down><CR>
+nnoremap <silent> <Space>wk <C-w><Up><CR>
+nnoremap <silent> <Space>wl <C-w><Right><CR>
+nnoremap <silent> <Space>wh <C-w><Left><CR>
+nnoremap <silent> <Space>aa :Agit<CR>
+nnoremap <silent> <Space>af :AgitFile<CR>
 
 NeoBundleCheck
 
