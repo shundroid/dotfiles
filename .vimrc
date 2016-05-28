@@ -1,23 +1,19 @@
-"if !has("gui_running")
-"  set term=pcansi
-"  set t_Co=256
+if !has("gui_running")
+"  set term=xterm
+  set t_Co=256
+
+  " カーソルの形状を変える
+  let &t_ti.="\e[1 q"
+  let &t_SI.="\e[5 q"
+  let &t_EI.="\e[1 q"
+  let &t_te.="\e[0 q"
+
+  " lightlineを表示する
+  set laststatus=2
+
 "  let &t_AB="\e[48;5;%dm"
 "  let &t_AF="\e[38;5;%dm"
-"  colorscheme molokai
-"  let g:molokai_original = 1
-"endif
-
-set number
-set title
-set showmatch
-syntax on
-set expandtab
-set tabstop=2
-set shiftwidth=2
-set list
-set listchars=tab:>.,trail:_,extends:>,precedes:<,nbsp:%
-set smartindent
-
+endif
 "set shellslash
 
 set encoding=utf-8
@@ -38,10 +34,6 @@ let mapleader = "\<Space>"
 nnoremap j gj
 nnoremap k gk
 
-"検索設定のハイライトとその取消
-set hlsearch
-nnoremap <ESC><ESC> :nohlsearch<CR>
-
 set clipboard=unnamed,autoselect " yank -> クリップボード
 
 " タブ系の設定
@@ -61,8 +53,9 @@ if &compatible
 endif
 set runtimepath^=~/vimfiles/bundle/neobundle.vim
 call neobundle#begin(expand('~/vimfiles/bundle/'))
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
+"NeoBundle 'vim-airline/vim-airline'
+"NeoBundle 'vim-airline/vim-airline-themes'
+NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'Shougo/unite.vim' " Ctrl + N で、ディレクトリ内のファイルを表示
 NeoBundle 'Shougo/neomru.vim' " Unite.vim で、「最近表示したファイル」を使う
 NeoBundle 'Shougo/neoyank.vim' " Unite.vim で、history/yank
@@ -76,37 +69,29 @@ NeoBundle 'lilydjwg/colorizer' " CSSで色をシンタックスで表示
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'mhinz/vim-startify' " 「スタートページ」を表示
-NeoBundle 'jonathanfilip/vim-lucius' " color scheme
-NeoBundle 'sjl/badwolf' " color scheme
+"NeoBundle 'jonathanfilip/vim-lucius' " color scheme
+"NeoBundle 'sjl/badwolf' " color scheme
 NeoBundle 'lambdalisue/unite-grep-vcs'
-NeoBundle 'tetris.vim'
-NeoBundle 'open-browser.vim'
+"NeoBundle 'tetris.vim'
+"NeoBundle 'open-browser.vim'
 NeoBundle 'marciomazza/vim-brogrammer-theme'
-NeoBundle 'terryma/vim-multiple-cursors'
+"NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'rust-lang/rust.vim'
-NeoBundle 'Shougo/vimshell'
+"NeoBundle 'Shougo/vimshell'
+"NeoBundle 'Shougo/neocomplete', {
+"\   'lazy': 1,
+"\   'insert': 1
+"\ }
 " gitk っぽいものを Vim で
-NeoBundle 'cohama/agit.vim', {
-\ 'lazy': 1,
-\ 'commands': 'Agit',
-\ }
+"NeoBundle 'cohama/agit.vim', {
+"\   'lazy': 1,
+"\   'commands': 'Agit',
+"\ }
 call neobundle#end()
 filetype plugin indent on
 
 " emmet-vim
 let g:user_emmet_leader_key='<c-t>'
-
-" vim-airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#tab_nr_type = 1
-let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#branch#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline_theme='durant'
-
-let g:airline_section_b =
-  \ '%{airline#extensions#branch#get_head()}'
 
 fu! GitAheadBehind()
   let output = system('git branch -vv')
@@ -122,26 +107,46 @@ fu! GitAheadBehind()
 
   return ''
 endfu
-fu! AirlineInit()
-  let g:airline_section_b = g:airline_section_b . '%{GitAheadBehind()}'
-endfu
+
+" vim-airline
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#show_buffers = 0
+"let g:airline#extensions#tabline#tab_nr_type = 1
+"let g:airline#extensions#tabline#show_tabs = 1
+"let g:airline#extensions#branch#enabled = 0
+"let g:airline_powerline_fonts = 1
+"let g:airline_theme='durant'
+"
+"let g:airline_section_b =
+"  \ '%{airline#extensions#branch#get_head()}'
+"
+"fu! AirlineInit()
+"  let g:airline_section_b = g:airline_section_b . '%{GitAheadBehind()}'
+"endfu
 "autocmd BufRead,BufNewFile * call AirlineInit()
 
 " 0でそのタブで開いてるウィンドウ数、1で左のタブから連番
 "let g:airline#extensions#tabline#tab_nr_type = 1
 
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+"if !exists('g:airline_symbols')
+"  let g:airline_symbols = {}
+"endif
+"
+"let g:airline_left_sep = '⮀'
+"let g:airline_left_alt_sep = '⮁'
+"let g:airline_right_sep = '⮂'
+"let g:airline_right_alt_sep = '⮃'
+"let g:airline_symbols.branch = '⭠'
+"let g:airline_symbols.readonly = '⭤'
+"let g:airline_symbols.linenr = '⭡'
 
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
-
+" lightlineの設定
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\   'component': {
+\     'readonly': '%{&readonly?"x":""}',
+\   }
+\ }
 " Unite.vimの設定
 " ウィンドウを分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
@@ -172,16 +177,19 @@ let g:vimshell_prompt = $USERNAME . "% "
 "\}
 
 " Agit.vim
-let agit_action = {}
-function! agit_action.func(dir)
-  if isdirectory(a:dir.word)
-    let dir = fnamemodify(a:dir.word, ':p')
-  else
-    let dir = fnamemodify(a:dir.word, ':p:h')
-  endif
-  execute 'Agit --dir=' . dir
-endfunction
-call unite#custom#action('file,cdable', 'agit', agit_action)
+"let agit_action = {}
+"function! agit_action.func(dir)
+"  if isdirectory(a:dir.word)
+"    let dir = fnamemodify(a:dir.word, ':p')
+"  else
+"    let dir = fnamemodify(a:dir.word, ':p:h')
+"  endif
+"  execute 'Agit --dir=' . dir
+"endfunction
+"call unite#custom#action('file,cdable', 'agit', agit_action)
+
+" neocomplete
+"let g:neocomplete#enable_at_startup = 1
 
 " Space によるキーバインド
 " git grep
@@ -206,6 +214,25 @@ nnoremap <silent> <Space>wl <C-w><Right><CR>
 nnoremap <silent> <Space>wh <C-w><Left><CR>
 nnoremap <silent> <Space>aa :Agit<CR>
 nnoremap <silent> <Space>af :AgitFile<CR>
+"検索設定のハイライトとその取消
+set hlsearch
+nnoremap <ESC><ESC> :nohlsearch<CR>
+
+
+if !has("gui_running")
+  colorscheme brogrammer
+end
+
+set number
+set title
+set showmatch
+syntax on
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set list
+set listchars=tab:>.,trail:_,extends:>,precedes:<,nbsp:%
+set smartindent
 
 NeoBundleCheck
 
