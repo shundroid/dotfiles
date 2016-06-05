@@ -23,10 +23,10 @@ set fileencodings=utf-8
 
 set foldmethod=indent " 折りたたみ。indentの数で折りたたむ
 
-set directory=~/vimfiles/tmp
-set backupdir=~/vimfiles/tmp
-set viminfo+=n~/vimfiles/tmp/viminfo.txt " オンにすると、vim-startupができない
-set undodir=~/vimfiles/tmp
+set directory=~/.vim/tmp
+set backupdir=~/.vim/tmp
+set viminfo+=n~/.vim/tmp/viminfo.txt " オンにすると、vim-startupができない
+set undodir=~/.vim/tmp
 
 let mapleader = "\<Space>"
 
@@ -51,8 +51,8 @@ filetype plugin indent off
 if &compatible
   set nocompatible
 endif
-set runtimepath^=~/vimfiles/bundle/neobundle.vim
-call neobundle#begin(expand('~/vimfiles/bundle/'))
+set runtimepath^=~/.vim/bundle/neobundle.vim
+call neobundle#begin(expand('~/.vim/bundle/'))
 "NeoBundle 'vim-airline/vim-airline'
 "NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'itchyny/lightline.vim'
@@ -73,10 +73,9 @@ NeoBundle 'mhinz/vim-startify' " 「スタートページ」を表示
 "NeoBundle 'sjl/badwolf' " color scheme
 NeoBundle 'lambdalisue/unite-grep-vcs'
 "NeoBundle 'tetris.vim'
-"NeoBundle 'open-browser.vim'
-NeoBundle 'marciomazza/vim-brogrammer-theme'
-"NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'vim-scripts/Sift'
 NeoBundle 'rust-lang/rust.vim'
+NeoBundle 'itchyny/screensaver.vim'
 "NeoBundle 'Shougo/vimshell'
 "NeoBundle 'Shougo/neocomplete', {
 "\   'lazy': 1,
@@ -220,7 +219,7 @@ nnoremap <ESC><ESC> :nohlsearch<CR>
 
 
 if !has("gui_running")
-  colorscheme brogrammer
+  colorscheme sift
 end
 
 set number
