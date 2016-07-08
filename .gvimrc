@@ -1,12 +1,10 @@
 gui
 set transparency=220
-"colorscheme lanox
-
-colorscheme brogrammer
+colorscheme sift
 " Windows
 set ambiwidth=double " 日本語フォントを全角分のスペースにする
-set guifont=Consolas\ for\ Powerline\ FixedD:h12
-set guifontwide=Consolas\ for\ Powerline\ FixedD:h12
+set guifont=Consolas_for_Powerline_FixedD:h11
+set guifontwide=MS_Gothic:h11
 
 set visualbell t_vb=
 
@@ -18,7 +16,7 @@ set guioptions-=L " remove left-hand scroll bar
 "set guioptions+=a " GVimで、Visualモードで選択したテキストをクリップボードに入れる
 
 highlight Folded guibg=bg guifg=red
+hi clear CursorLine
 
-" コメントが暗くて見えないから修正
-"highlight Comment ctermfg=22 guifg=#999999
+set guioptions-=e
 
