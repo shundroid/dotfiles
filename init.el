@@ -4,14 +4,17 @@
 (set-frame-parameter nil 'alpha 90)
 (setq ring-bell-function 'ignore)
 
-(set-face-attribute 'default nil :family "Consolas for Powerline FixedD" :height 104)
+(set-face-attribute 'default nil :family "Consolas" :height 104)
 
 (setq eol-mnemonic-dos "(CRLF)")
 (setq eol-mnemonic-mac "(CR)")
 (setq eol-mnemonic-unix "(LF)")
 
+(setq-default show-trailing-whitespace t)
+
 (show-paren-mode 1)
 ;;(global-whitespace-mode 1)
+(electric-pair-mode 1)
 (setq scroll-conservatively 1) ;; スクロールを1行ずつに
 
 (setq make-backup-files nil)
@@ -37,6 +40,8 @@
 (package-install-with-refresh 'color-theme-modern)
 (package-install-with-refresh '2048-game)
 (package-install-with-refresh 'eyebrowse)
+(package-install-with-refresh 'rainbow-mode) ;; cssのカラーコードなどに色を付ける
+(package-install-with-refresh 'web-mode)
 
 (setq evil-want-C-u-scroll t)
 (require 'evil)
@@ -65,9 +70,34 @@
 
 (eyebrowse-mode t)
 
+;; evil
+(setq evil-shift-width 2)
+
 ;; file
 (setq-default tab-width 2 indent-tabs-mode nil)
 
 ;; js
 (setq js-indent-level 2)
 
+;; css
+(defun brace-ret-brace ()
+  (interactive)
+  (insert "{") (newline-and-indent)
+  (newline-and-indent)
+  (insert "}") (indent-for-tab-command)
+  (newline-and-indent) (newline-and-indent)
+  (previous-line) (previous-line) (previous-line)
+  (indent-for-tab-command)
+  )
+(add-hook 'css-mode-hook
+          (lambda ()
+            (setq css-indent-offset 2)
+            (rainbow-mode)
+            ))
+
+
+;; html
+(add-hook 'html-mode-hook
+          (lambda ()
+            (sgml-mode)
+            (sgml-electoric-tag-pair-mode)))
