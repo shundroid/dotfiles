@@ -42,8 +42,13 @@
 (package-install-with-refresh 'eyebrowse)
 (package-install-with-refresh 'rainbow-mode) ;; cssのカラーコードなどに色を付ける
 (package-install-with-refresh 'web-mode)
+(package-install-with-refresh 'emmet-mode)
 
 (setq evil-want-C-u-scroll t)
+
+;; evil
+(setq evil-shift-width 2)
+
 (require 'evil)
 (evil-mode 1)
 
@@ -65,13 +70,17 @@
 (nyan-mode 1)
 (nyan-start-animation)
 
+(require 'emmet-mode)
+(add-hook 'web-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+
 (load-theme 'cobalt t t)
 (enable-theme 'cobalt)
 
 (eyebrowse-mode t)
-
-;; evil
-(setq evil-shift-width 2)
 
 ;; file
 (setq-default tab-width 2 indent-tabs-mode nil)
@@ -96,8 +105,10 @@
             ))
 
 
-;; html
-(add-hook 'html-mode-hook
+(add-hook 'web-mode-hook
           (lambda ()
-            (sgml-mode)
-            (sgml-electoric-tag-pair-mode)))
+            (setq web-mode-code-indent-offset 2)
+            (setq web-mode-css-indent-offset 2)
+            (setq web-mode-markup-indent-offset 2)
+            (setq web-mode-style-padding 0)
+            (setq web-mode-script-padding 0)))
