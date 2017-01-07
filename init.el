@@ -43,6 +43,8 @@
 (package-install-with-refresh 'rainbow-mode) ;; cssのカラーコードなどに色を付ける
 (package-install-with-refresh 'web-mode)
 (package-install-with-refresh 'emmet-mode)
+(package-install-with-refresh 'sublime-themes)
+(package-install-with-refresh 'powerline)
 
 (setq evil-want-C-u-scroll t)
 
@@ -75,12 +77,18 @@
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
 
 (require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
-(load-theme 'cobalt t t)
-(enable-theme 'cobalt)
+(require 'powerline)
+(powerline-default-theme)
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'granger t)
 
 (eyebrowse-mode t)
+
+(setq linum-format " %d")
 
 ;; file
 (setq-default tab-width 2 indent-tabs-mode nil)
@@ -111,4 +119,5 @@
             (setq web-mode-css-indent-offset 2)
             (setq web-mode-markup-indent-offset 2)
             (setq web-mode-style-padding 0)
-            (setq web-mode-script-padding 0)))
+            (setq web-mode-script-padding 0)
+            (setq web-mode-tag-auto-close-style 2)))
