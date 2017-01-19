@@ -45,8 +45,8 @@
 (package-install-with-refresh 'emmet-mode)
 (package-install-with-refresh 'sublime-themes)
 (package-install-with-refresh 'powerline)
-
-(setq evil-want-C-u-scroll t)
+(package-install-with-refresh 'smooth-scroll)
+(package-install-with-refresh 'auto-complete)
 
 ;; evil
 (setq evil-shift-width 2)
@@ -77,8 +77,8 @@
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
 
 (require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
 
 (require 'powerline)
 (powerline-default-theme)
@@ -121,3 +121,9 @@
             (setq web-mode-style-padding 0)
             (setq web-mode-script-padding 0)
             (setq web-mode-tag-auto-close-style 2)))
+
+(setq evil-want-C-u-scroll t)
+(global-set-key (kbd "C-u") 'evil-scroll-up)
+
+(require 'smooth-scroll)
+(smooth-scroll-mode t)
